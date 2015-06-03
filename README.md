@@ -7,7 +7,7 @@ A couple Python Scripts which use Beautiful Soup to Collect Latest Chapter Numbe
 
 This project includes two crawler scripts for <https://kissmanga.com>:
 
-1.	notifications.py which checks for latest chapters
+1.	notification.py which checks for latest chapters
 
 2.	images.py which checks for the latest images provided for the series on the website
 
@@ -21,7 +21,7 @@ To run the scripts you need:
 
 
 
-To run notifications.py (assumes you already have Python 2.7 and Beautiful Soup installed properly):
+To run notification.py (assumes you already have Python 2.7 and Beautiful Soup installed properly):
 
 1.	Create MangA.txt if not already created.
 
@@ -31,9 +31,9 @@ To run notifications.py (assumes you already have Python 2.7 and Beautiful Soup 
 
 4.	Provide the latest chapter number you have read following the series name separated by a Tab. An example is provided in MangA.txt. Enter each series on a separate line.
 
-5.	Once you have your list you can run notifications.py by double clicking on run.bat. (Assumes you have MangA.txt, notifications.py and run.bat in the same directory).
+5.	Once you have your list you can run notification.py by double clicking on run.bat. (Assumes you have MangA.txt, notification.py and run.bat in the same directory).
 
-6.	To run the images.py file edit the contents of run.bat from python notifications.py to python images.py  and then double click on the file.
+6.	To run the images.py file edit the contents of run.bat from python notification.py to python images.py  and then double click on the file.
 
 
 
@@ -41,7 +41,7 @@ __Warnings:__
 
 1.	These scripts have been tested on a Windows 8 environment (I have been personally using them for at least a year)
 
-2.	In the past sometimes the parser in notifications.py stops working. Alternating between xml and html solves the issue.
+2.	In the past sometimes the parser in notification.py stops working. Alternating between xml and html solves the issue.
 
 3.	One logical issue is that the update gets stored in memory and then printed. This is vulnerable to errors that break the program causing memory loss and memory limits in case of very large sizes.
 
