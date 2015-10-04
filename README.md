@@ -43,6 +43,8 @@ __Warnings:__
 
 2.	In the past sometimes the parser in notification.py stops working. Alternating between xml and html solves the issue.
 
-3.	One logical issue is that the update gets stored in memory and then printed. This is vulnerable to errors that break the program causing memory loss and memory limits in case of very large sizes.
+3.	One logical issue is that the update gets stored in memory and then printed. This is vulnerable to errors that break the program causing memory loss and memory limits in case of very large sizes. Meaning if the program breaks for any reason before printing to the text file, all updates are lost.
 
 4.	The total number provided is also an estimate, due to fractional chapter numbers (e.g. a sum of 2.002 is rounded to 3 chapters assuming .002 stands for an extra side story chapter. The problem here is .002 might be one chapter or two .001 chapters or any other combination).
+
+5.	This algorithm is totally dependant on the sort algorithm of the kissmanga website. It grabs the first entry in the site's list which is almost always the most recent chapter. There has been cases in the past where the most recent chapter is jumbled somewhere in the chapter list (is not the first entry).
