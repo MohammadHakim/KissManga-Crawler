@@ -34,8 +34,7 @@ def getHtmlOf(title):
        'Accept-Encoding': 'none',
        'Accept-Language': 'en-US,en;q=0.8',
        'Connection': 'keep-alive'}
-    import urllib2,time,random
-    #sleep(random.randint(60,120))
+    import urllib2
     website = "http://kissmanga.com/Manga/"
     website = website+title
     request = urllib2.Request(website,headers=hdr)
@@ -128,37 +127,45 @@ def extractChapterNum(choice, title):
     return chapter
 def listNewChapters(titles):
 	new = []
-	for title in titles:
-		print "Checking "+title
-		Chapter,Title = getString(getHtmlOf(title))
-		#cool Now I need to strip the string to get only the numbers
-		Number = extractChapterNum(Chapter,Title)
-		new.append(Number)
 	return new
-def textNprint(titles,old,new):
-	import datetime
-	ToSave = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+'\n'
-	total = 0
-	for n in range(len(old)):
-		if(new[n]>old[n]):
-			maybe = "New Chapter"+"("+'%5s'+") "+'%5s'+" for"+'%30s'+". You are now on "+ '%5s'      
-			ToSave=ToSave+maybe % (str(new[n]-old[n]),str(new[n]),str(titles[n]),str(old[n])) + '\n'
-			#print "New Chapter","(",new[n]-old[n],")",new[n],"for",titles[n],". You are now on", old[n]
-			print maybe % (str(new[n]-old[n]),str(new[n]),str(titles[n]),str(old[n]))
-			total = total + new[n]-old[n]
-			if eval(str(total).split(".")[1]) > 0:
-				total = eval(str(total).split(".")[0]) + 1
-	print "Total: ",total
-	ToSave=ToSave+'\n'+'Total: '+str(total)		
-	ToSave=ToSave+(4*'\n')
-	for n in range(len(titles)):
-		ToSave=ToSave+str(titles[n])
-		ToSave=ToSave+str('\t')
-		ToSave=ToSave+str(new[n])
-		ToSave=ToSave+str('\n')   
-	f = open('UpdatedManga.txt','w')
-	f.write(ToSave)
-	f.close()
+def CheckNprint(titles,old,textFile):
+	try:
+         	import datetime
+         	f = open(textFile,'a')
+         	f.truncate()
+        	f.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+'\n')
+        	new = []
+        	n = 0
+     		total = 0
+         	while n < len(titles):
+        		print "Checking "+titles[n]
+        		Chapter,Title = getString(getHtmlOf(titles[n]))
+        		#cool Now I need to strip the string to get only the numbers
+        		Number = extractChapterNum(Chapter,Title)
+        		new.append(Number)
+        		if(Number>old[n]):
+        			maybe = "New Chapter"+"("+'%5s'+") "+'%5s'+" for"+'%30s'+". You are now on "+ '%5s'     
+        			f.write(maybe % (str(Number-old[n]),str(Number),str(titles[n]),str(old[n])) + '\n')
+        			print maybe % (str(Number-old[n]),str(Number),str(titles[n]),str(old[n]))
+        			total = total + Number-old[n]
+        			if eval(str(total).split(".")[1]) > 0:
+        				total = eval(str(total).split(".")[0]) + 1
+        		n+=1
+        	print 4*'\n'
+        	print "Total: ",total
+        	print "See ", textFile," for report"
+        	f.write('\n'+'Total: '+str(total))		
+        	f.write((4*'\n'))
+        	f.write("List of titles with updated chapter numbers:\n")
+        	for n in range(len(titles)):
+        		f.write(str(titles[n]))
+        		f.write(str('\t'))
+        		f.write(str(new[n]))
+        		f.write(str('\n'))
+        	f.close()
+	except:
+        	f.write("error")
+        	f.close()     
 	
 	
 
@@ -166,16 +173,21 @@ def textNprint(titles,old,new):
 
 ####################################################################################
 #first step is to read in the titles
+"""
+import sys
 
-from time import *
+sys.stdout.write("hello")
+f=open('UpdatedManga.txt','w')
+f.write("hello")
+f.close()
+"""
+from time import sleep
 print "Program Start"
 
 titles = getTitlesFrom('MangA.txt')
 old = getOldCh('MangA.txt')
 #now let me try to get a list of the new titles from kissmanga.com
-new = listNewChapters(titles)
-print 4*'\n'
-textNprint(titles,old,new)
+CheckNprint(titles,old,'UpdatedManga.txt')
 
 print "Program Done"
-sleep(20)
+sleep(3)
