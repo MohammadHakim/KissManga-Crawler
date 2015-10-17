@@ -43,7 +43,7 @@ __Warnings:__
 
 2.	In the past sometimes the parser in notification.py stops working. Alternating between xml and html solves the issue.
 
-3.	One logical issue is that the update gets stored in memory and then printed. This is vulnerable to errors that break the program causing memory loss and memory limits in case of very large sizes. Meaning if the program breaks for any reason before printing to the text file, all updates are lost.
+3.	One logical issue is that the update gets stored in memory. This makes the program vulnerable to long chapter lists. Although I doubt anyone has a list of chapters long enough to break the program. Anyone with such a list should not use this program as the html parser is actually slow compared to normal text parser.
 
 4.	The total number provided is also an estimate, due to fractional chapter numbers (e.g. a sum of 2.002 is rounded to 3 chapters assuming .002 stands for an extra side story chapter. The problem here is .002 might be one chapter or two .001 chapters or any other combination).
 
