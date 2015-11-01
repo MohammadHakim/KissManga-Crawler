@@ -1,3 +1,6 @@
+#THIS CODE IS FUTILE WHEN THE JAVA VERIFICATION MECHANISIM OF KISSMANGA IS ENABLED (A 5 SEC WAIT TIME BEFORE THE HTTP SOURCE IS DISPLAYED. IF YOU HAVE A SOLUTION LET ME KNOW)#
+
+
 # KissManga-Crawler
 A couple Python Scripts which use Beautiful Soup to Collect Latest Chapter Number and Series Cover Art
 
