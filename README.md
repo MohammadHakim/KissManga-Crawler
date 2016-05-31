@@ -1,6 +1,3 @@
-#THIS CODE IS FUTILE WHEN THE JAVA VERIFICATION MECHANISIM OF KISSMANGA IS ENABLED (A 5 SEC WAIT TIME BEFORE THE HTTP SOURCE IS DISPLAYED. IF YOU HAVE A SOLUTION LET ME KNOW)#
-
-
 # KissManga-Crawler
 A couple Python Scripts which use Beautiful Soup to Collect Latest Chapter Number and Series Cover Art
 
@@ -18,13 +15,17 @@ This project includes two crawler scripts for <https://kissmanga.com>:
 
 To run the scripts you need:
 
-1.	Python 2.7
+1.	[Python 2.7](https://www.python.org/downloads/)
 
-2.	The library Beautiful Soup
+2.	[The library Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/)
+
+3.	[Nodejs](https://nodejs.org/en/download/)
+
+4.	[The library Cloud Flare Scrape](https://github.com/Anorov/cloudflare-scrape)
 
 
 
-To run notification.py (assumes you already have Python 2.7 and Beautiful Soup installed properly):
+To run notification.py (assumes all the above installed properly):
 
 1.	Create MangA.txt if not already created.
 
@@ -46,8 +47,10 @@ __Warnings:__
 
 2.	In the past sometimes the parser in notification.py stops working. Alternating between xml and html solves the issue.
 
-3.	One logical issue is that the update gets stored in memory. This makes the program vulnerable to long chapter lists. Although I doubt anyone has a list of chapters long enough to break the program. Anyone with such a list should not use this program as the html parser is actually slow compared to normal text parser.
+3.	One logical issue is that the update gets stored in memory. This makes the program vulnerable to long chapter lists. Although I doubt anyone has a list of chapters long enough to break the program. Anyone with such a list should not use this program as the html parser is actually slow compared to normal text parsers.
 
 4.	The total number provided is also an estimate, due to fractional chapter numbers (e.g. a sum of 2.002 is rounded to 3 chapters assuming .002 stands for an extra side story chapter. The problem here is .002 might be one chapter or two .001 chapters or any other combination).
 
-5.	This algorithm is totally dependant on the sort algorithm of the kissmanga website. It grabs the first entry in the site's list which is almost always the most recent chapter. There has been cases in the past where the most recent chapter is jumbled somewhere in the chapter list (is not the first entry).
+5.	This algorithm is totally dependent on the sort algorithm of the kissmanga website. It grabs the first entry in the site's list which is almost always the most recent chapter. There has been cases in the past where the most recent chapter is jumbled somewhere in the chapter list (is not the first entry).
+
+6.	This program is dependent on the cloud flare scrape library ability to bypass the security mechanism of kissmanga. If cloud flare updates their protective page from the 5 second counter to something else, this program is futile.
