@@ -5,7 +5,7 @@ A Python Script which uses Beautiful Soup to Collect Latest Chapter Numbers
 #Hello!#
 
 
-This project includes a crawler scripts for <https://kissmanga.com>:
+This project includes a crawler script for <https://kissmanga.com>:
 
 1.	notification.py which checks for latest chapters
 
