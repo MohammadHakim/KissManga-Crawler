@@ -35,8 +35,6 @@ To run notification.py (assumes all the above installed properly):
 
 5.	Once you have your list you can run notification.py by double clicking on run.bat. (Assumes you have MangA.txt, notification.py and run.bat in the same directory).
 
-6.	To run the images.py file edit the contents of run.bat from python notification.py to python images.py  and then double click on the file.
-
 
 
 __Warnings:__
