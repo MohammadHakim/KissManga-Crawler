@@ -28,18 +28,21 @@ def getOldCh(String):
         old[title] = float(old[title])
     return old
 def getHtmlOf(title):
-    hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
-       'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
-       'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
-       'Accept-Encoding': 'none',
-       'Accept-Language': 'en-US,en;q=0.8',
-       'Connection': 'keep-alive'}
-    import urllib2
+    #hdr = {'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.11 (KHTML, like Gecko) Chrome/23.0.1271.64 Safari/537.11',
+    #   'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
+    #   'Accept-Charset': 'ISO-8859-1,utf-8;q=0.7,*;q=0.3',
+    #   'Accept-Encoding': 'none',
+    #   'Accept-Language': 'en-US,en;q=0.8',
+    #   'Connection': 'keep-alive'}
+    #import urllib2
+    import cfscrape
+    scraper = cfscrape.create_scraper()
     website = "http://kissmanga.com/Manga/"
     website = website+title
-    request = urllib2.Request(website,headers=hdr)
-    response = urllib2.urlopen(request)
-    page_source = response.read()
+    #request = urllib2.Request(website,headers=hdr)
+    #response = urllib2.urlopen(request)
+    #page_source = response.read()
+    page_source = scraper.get(website).content
     return page_source
 def getString(page_source):
 	from bs4 import BeautifulSoup
