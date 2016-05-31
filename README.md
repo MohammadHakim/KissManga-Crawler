@@ -39,7 +39,7 @@ To run notification.py (assumes all the above installed properly):
 
 __Warnings:__
 
-1.	These scripts have been tested on a Windows 8 environment (I have been personally using them for at least a year)
+1.	This script has been tested on a Windows 8 environment (I have been personally using it for at least a year)
 
 2.	In the past sometimes the parser in notification.py stops working. Alternating between xml and html solves the issue.
 
