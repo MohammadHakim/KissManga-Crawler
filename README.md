@@ -1,15 +1,13 @@
 # KissManga-Crawler
-A couple Python Scripts which use Beautiful Soup to Collect Latest Chapter Number and Series Cover Art
+A Python Script which uses Beautiful Soup to Collect Latest Chapter Numbers
 
 
 #Hello!#
 
 
-This project includes two crawler scripts for <https://kissmanga.com>:
+This project includes a crawler scripts for <https://kissmanga.com>:
 
 1.	notification.py which checks for latest chapters
-
-2.	images.py which checks for the latest images provided for the series on the website
 
 
 
