@@ -1,6 +1,6 @@
 #this file will host my try to notify me of updates Using A web Parser 
 #parts of this code were contributed by programmers on http://stackoverflow.com/
-
+"""
 def getTitlesFrom(String):
     #for that I will need the number of lines
     myfile = open(String,'r+')
@@ -42,6 +42,21 @@ def getHtmlOf(title):
     #request = urllib2.Request(website,headers=hdr)
     #response = urllib2.urlopen(request)
     #page_source = response.read()
+    page_source = scraper.get(website).content
+    return page_source
+"""
+def getOldTitleNChap(String):
+    myfile = open(String,'r+')
+    titles = []
+    old = []
+    for line in myfile:
+        splitLine = line.split('\t')
+        titles.append(splitLine[0])
+        old.append(float(splitLine[1]))
+    return titles, old
+def getHtmlOf(title,scraper):
+    website = "http://kissmanga.com/Manga/"
+    website = website+title
     page_source = scraper.get(website).content
     return page_source
 def getString(page_source):
@@ -128,12 +143,16 @@ def extractChapterNum(choice, title):
                     chapter = 1000#meaning there is a problem
     chapter = float(chapter)
     return chapter
+"""
 def listNewChapters(titles):
 	new = []
 	return new
+ """
 def CheckNprint(titles,old,textFile):
 	try:
          	import datetime
+         	import cfscrape
+         	scraper = cfscrape.create_scraper()
          	f = open(textFile,'a')
          	f.truncate()
         	f.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+'\n')
@@ -142,7 +161,7 @@ def CheckNprint(titles,old,textFile):
      		total = 0
          	while n < len(titles):
         		print "Checking "+titles[n]
-        		Chapter,Title = getString(getHtmlOf(titles[n]))
+        		Chapter,Title = getString(getHtmlOf(titles[n],scraper))
         		#cool Now I need to strip the string to get only the numbers
         		Number = extractChapterNum(Chapter,Title)
         		new.append(Number)
@@ -168,27 +187,21 @@ def CheckNprint(titles,old,textFile):
         	f.close()
 	except:
         	f.write("error")
-        	f.close()     
-	
+        	f.close()
+        	raise	
 	
 
 
 
 ####################################################################################
 #first step is to read in the titles
-"""
-import sys
-
-sys.stdout.write("hello")
-f=open('UpdatedManga.txt','w')
-f.write("hello")
-f.close()
-"""
 from time import sleep
 print "Program Start"
-
+"""
 titles = getTitlesFrom('MangA.txt')
 old = getOldCh('MangA.txt')
+"""
+titles, old = getOldTitleNChap('MangA.txt')
 #now let me try to get a list of the new titles from kissmanga.com
 CheckNprint(titles,old,'UpdatedManga.txt')
 
