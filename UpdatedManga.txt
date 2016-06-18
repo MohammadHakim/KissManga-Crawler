@@ -1,10 +1,11 @@
-2015-06-02 23:48:32
-New Chapter(141.0) 141.0 for            Ansatsu-Kyoushitsu. You are now on   0.0
-New Chapter(  1.0)  11.0 for                 Biorg-Trinity. You are now on  10.0
+2016-06-18 09:59:05
+New Chapter(489.0) 489.0 for                    Fairy-Tail. You are now on   0.0
+New Chapter(  4.0)  14.0 for                 Biorg-Trinity. You are now on  10.0
 
-Total: 142.0
+Total: 493.0
 
 
 
-Ansatsu-Kyoushitsu	141.0
-Biorg-Trinity	11.0
+List of titles with updated chapter numbers:
+Fairy-Tail	489.0
+Biorg-Trinity	14.0
