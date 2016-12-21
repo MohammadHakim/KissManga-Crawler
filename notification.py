@@ -25,21 +25,21 @@ def extractChapterNum(choice, title):
     and utilizes the page title to choose candidate numbers that are assumed to
     be the chapter number"""
     import re
-    #if there is a single digit in the chapter string
-    remove = title.split()#remove white spaces
-    biggie = re.compile('|'.join(map(re.escape,remove)))#remove strings which appear in the title string from the chapter string
-    choice = biggie.sub("",choice)
-    chapter = re.findall("\d+\.\d+|\d+",choice)#find all the numbers in the chapter string
-    chapter = [x for x in chapter if float(x)!=0]#excluding white characters
-    if len(chapter)==1:
-        chapter = chapter[0]
-    else:
+    try:
         #if the string CH is found (ch., ch, chapter, chap., etc)
-        try:
-            temp = re.search('ch[\w\s,.]+\d+', choice, re.IGNORECASE).group(0)
-            chapter = re.search('\d+\.\d+|\d+',temp).group(0)
-        #otherwise
-        except AttributeError:
+        temp = re.search('ch[\w\s,.]+\d+', choice, re.IGNORECASE).group(0)
+        chapter = re.search('\d+\.\d+|\d+',temp).group(0)
+    except AttributeError:
+        #if there is a single digit in the chapter string
+        remove = title.split()#remove white spaces
+        biggie = re.compile('|'.join(map(re.escape,remove)))#remove strings which appear in the title string from the chapter string
+        choice = biggie.sub("",choice)
+        chapter = re.findall("\d+\.\d+|\d+",choice)#find all the numbers in the chapter string
+        chapter = [x for x in chapter if float(x)!=0]#excluding white characters
+        if len(chapter)==1:
+            chapter = chapter[0]
+        else:
+            #otherwise
             chapter = 1000
     return float(chapter)
 def CheckNprint(titles,old,textFile):
