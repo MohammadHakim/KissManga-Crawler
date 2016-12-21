@@ -24,66 +24,24 @@ def extractChapterNum(choice, title):
     """This function looks for chapter, ch or numbers in a given choice string
     and utilizes the page title to choose candidate numbers that are assumed to
     be the chapter number"""
-    #the easiest way to find the chapter number is to look for the two variations ch and chapter
     import re
-    #first convert the string to all lower case to avoid the need to account to variations
-    choice = choice.lower()
-    title = title.lower()
-    #make sure you remove any strings appearing in title from choice
-    remove = title.split()
-    biggie = re.compile('|'.join(map(re.escape,remove)))
+    #if there is a single digit in the chapter string
+    remove = title.split()#remove white spaces
+    biggie = re.compile('|'.join(map(re.escape,remove)))#remove strings which appear in the title string from the chapter string
     choice = biggie.sub("",choice)
-    #before that however try to see if the title has onle one number, that number is probably the chapter number
-    chapter = re.findall("\d+\.\d+|\d+",choice)
-    #make sure you don't have zeroes in the list
-    chapter = [x for x in chapter if float(x)!=0]
+    chapter = re.findall("\d+\.\d+|\d+",choice)#find all the numbers in the chapter string
+    chapter = [x for x in chapter if float(x)!=0]#excluding white characters
     if len(chapter)==1:
         chapter = chapter[0]
     else:
-        #first try to find the word chapter in the title
-        chapter = choice.split('ch')
-        if len(chapter)>1:
-            #If you fall here then the word chapter was found, search in the 1st term for the chapter number
-            for n in range(1,len(chapter)):
-                try:
-                    chapter = re.search("\d+|\d+\.\d+",chapter[n]).group(0)
-                    break
-                except:
-                    chapter = 1000#meaning there is a problem
-        else:
-            #If you fall here then chapter was not found try ch instead
-            chapter = choice.split('chapter');#CH IN TITLE PROBLEM
-            if len(chapter)>1:
-                #if you fall here then ch was found, search for the chapter number
-                for n in range(1,len(chapter)):
-                    try:
-                        chapter = re.search("\d+\.\d+|\d+",chapter[n]).group(0);#print chapter
-                        break
-                    except:
-                        continue
-            else:
-                #if you fall here then neither chapter nor ch were found look for all the numbers in the chapter
-                chapter = choice
-                chapter = re.findall("\d+\.\d+|\d+",chapter)
-                #discard any numbers which appear in the title to do this
-                title = re.findall("\d+\.\d+|\d+",title)
-                title = list(set(title))
-                newchapter = []
-                for number in chapter:
-                    for occurance in title:
-                        if(float(number)== float(occurance)):
-                            break
-                        else:
-                            if occurance == (title[len(title)-1]):
-                                newchapter.append(number)
-                if(len(newchapter)==1):
-                    chapter = newchapter[0]
-                elif(len(newchapter)==0):
-                    chapter = chapter[0]
-                else:
-                    chapter = 1000#meaning there is a problem
-    chapter = float(chapter)
-    return chapter
+        #if the string CH is found (ch., ch, chapter, chap., etc)
+        try:
+            temp = re.search('ch[\w\s,.]+', choice, re.IGNORECASE).group(0)
+            chapter = re.search('\d+\.\d+|\d+',temp).group(0)
+        #otherwise
+        except AttributeError:
+            chapter = 1000
+    return float(chapter)
 def CheckNprint(titles,old,textFile):
 	try:
          	import datetime
