@@ -36,7 +36,7 @@ def extractChapterNum(choice, title):
     else:
         #if the string CH is found (ch., ch, chapter, chap., etc)
         try:
-            temp = re.search('ch[\w\s,.]+', choice, re.IGNORECASE).group(0)
+            temp = re.search('ch[\w\s,.]+\d+', choice, re.IGNORECASE).group(0)
             chapter = re.search('\d+\.\d+|\d+',temp).group(0)
         #otherwise
         except AttributeError:
