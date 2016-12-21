@@ -27,9 +27,9 @@ def extractChapterNum(choice, title):
     import re
     try:
         #if the string CH is found (ch., ch, chapter, chap., etc)
-        temp = re.search('ch[\w\s,.]+\d+', choice, re.IGNORECASE).group(0)
+        temp = re.findall('ch[\w\s,.]+?\d+', choice, re.IGNORECASE)[-1]
         chapter = re.search('\d+\.\d+|\d+',temp).group(0)
-    except AttributeError:
+    except (AttributeError, IndexError):
         #if there is a single digit in the chapter string
         remove = title.split()#remove white spaces
         biggie = re.compile('|'.join(map(re.escape,remove)))#remove strings which appear in the title string from the chapter string
