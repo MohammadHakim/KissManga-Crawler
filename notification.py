@@ -1,4 +1,4 @@
-#this file will host my try to notify me of updates Using A web Parser 
+#This file hosts code which generates a list of updated manga chapters of interest from KissManga.com
 #parts of this code were contributed by programmers on http://stackoverflow.com/
 def getOldTitleNChap(String):
     myfile = open(String,'r+')
@@ -35,7 +35,7 @@ def extractChapterNum(choice, title):
         biggie = re.compile('|'.join(map(re.escape,remove)))#remove strings which appear in the title string from the chapter string
         choice = biggie.sub("",choice)
         chapter = re.findall("\d+\.\d+|\d+",choice)#find all the numbers in the chapter string
-        chapter = [x for x in chapter if float(x)!=0]#excluding white characters
+        chapter = [x for x in chapter if float(x)!=0]#excluding Zeros
         if len(chapter)==1:
             chapter = chapter[0]
         else:
@@ -58,7 +58,6 @@ def CheckNprint(titles,old,textFile):
         		print "Checking "+titles[n]
 			page_source = getHtmlOf(titles[n],scraper)
         		Chapter,Title = getString(page_source)
-        		#cool Now I need to strip the string to get only the numbers
         		Number = extractChapterNum(Chapter,Title)
 			#handle chapter titles with no numbers (1000 indicates an error)
 			if Number == 1000:
@@ -100,7 +99,7 @@ print "Program Start"
 
 #first step is to read in the titles
 titles, old = getOldTitleNChap('MangA.txt')
-#now let me try to get a list of the new titles from kissmanga.com
+#Get a list of the new titles from kissmanga.com
 CheckNprint(titles,old,'UpdatedManga.txt')
 
 print "Program Done"
