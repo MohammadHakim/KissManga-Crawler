@@ -66,7 +66,7 @@ def CheckNprint(titles,old,textFile):
                 Number = next((i+old[n] for i,x in enumerate(listOfChapters) if extractChapterNum(x.a.get_text(),Title) == old[n]),1000)
             new.append(Number)
             if(Number>old[n]):
-                maybe = "New Chapter"+"("+'%5s'+") "+'%5s'+" for"+'%30s'+". You are now on "+ '%5s'     
+                maybe = "New Chapter"+"("+'%5s'+") "+'%5s'+" for"+'%30s'+". You are now on "+ '%5s'
                 f.write(maybe % (str(Number-old[n]),str(Number),str(titles[n]),str(old[n])) + '\n')
                 print maybe % (str(Number-old[n]),str(Number),str(titles[n]),str(old[n]))
                 total = total + Number-old[n]
@@ -76,7 +76,7 @@ def CheckNprint(titles,old,textFile):
         print 4*'\n'
         print "Total: ",total
         print "See ", textFile," for report"
-        f.write('\n'+'Total: '+str(total))		
+        f.write('\n'+'Total: '+str(total))
         f.write((4*'\n'))
         f.write("List of titles with updated chapter numbers:\n")
         for n in range(len(titles)):
@@ -88,15 +88,10 @@ def CheckNprint(titles,old,textFile):
     except:
         f.write("error")
         f.close()
-        raise	
-	
-
-
-
+        raise
 ####################################################################################
 from time import sleep
 print "Program Start"
-
 #first step is to read in the titles
 titles, old = getOldTitleNChap('MangA.txt')
 #Get a list of the new titles from kissmanga.com
