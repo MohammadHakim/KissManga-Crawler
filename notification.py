@@ -46,7 +46,8 @@ def CheckNprint(titles,old,textFile):
 	try:
          	import datetime
          	import cfscrape
-         	scraper = cfscrape.create_scraper()
+		from bs4 import BeautifulSoup
+		scraper = cfscrape.create_scraper()
          	f = open(textFile,'a')
          	f.truncate()
         	f.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+'\n')
@@ -55,9 +56,15 @@ def CheckNprint(titles,old,textFile):
      		total = 0
          	while n < len(titles):
         		print "Checking "+titles[n]
-        		Chapter,Title = getString(getHtmlOf(titles[n],scraper))
+			page_source = getHtmlOf(titles[n],scraper)
+        		Chapter,Title = getString(page_source)
         		#cool Now I need to strip the string to get only the numbers
         		Number = extractChapterNum(Chapter,Title)
+			#handle chapter titles with no numbers (1000 indicates an error)
+			if Number == 1000:
+			    soup = BeautifulSoup(page_source)
+			    listOfChapters = [x for x in soup.find_all('td') if x.a !=None]
+			    Number = next((i+old[n] for i,x in enumerate(listOfChapters) if extractChapterNum(x.a.get_text(),Title) == old[n]),1000)
         		new.append(Number)
         		if(Number>old[n]):
         			maybe = "New Chapter"+"("+'%5s'+") "+'%5s'+" for"+'%30s'+". You are now on "+ '%5s'     
