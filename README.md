@@ -41,12 +41,8 @@ __Warnings:__
 
 1.	This script has been tested on a Windows 8+10 environments (I have been personally using it for at least a year)
 
-2.	In the past sometimes the parser in notification.py stops working. Alternating between xml and html solves the issue.
+2.	The total number provided is an estimate, due to fractional chapter numbers (e.g. a sum of 2.002 is rounded to 3 chapters assuming .002 stands for an extra side story chapter. The problem here is .002 might be one chapter or two .001 chapters or any other combination).
 
-3.	One logical issue is that the update gets stored in memory. This makes the program vulnerable to long chapter lists. Although I doubt anyone has a list of chapters long enough to break the program. Anyone with such a list should not use this program as the html parser is actually slow compared to normal text parsers.
+3.	This algorithm is totally dependent on the sort algorithm of the kissmanga website. It grabs the first entry in the site's list which is almost always the most recent chapter. There has been cases in the past where the most recent chapter is jumbled somewhere in the chapter list (is not the first entry).
 
-4.	The total number provided is also an estimate, due to fractional chapter numbers (e.g. a sum of 2.002 is rounded to 3 chapters assuming .002 stands for an extra side story chapter. The problem here is .002 might be one chapter or two .001 chapters or any other combination).
-
-5.	This algorithm is totally dependent on the sort algorithm of the kissmanga website. It grabs the first entry in the site's list which is almost always the most recent chapter. There has been cases in the past where the most recent chapter is jumbled somewhere in the chapter list (is not the first entry).
-
-6.	This program is dependent on the cloud flare scrape library ability to bypass the security mechanism of kissmanga. If cloud flare updates their protective page from the 5 second counter to something else, this program is futile.
+4.	This program is dependent on the cloud flare scrape library ability to bypass the security mechanism of kissmanga. If cloud flare updates their protective page from the 5 second counter to something else, this program is futile.
