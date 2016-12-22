@@ -1,14 +1,5 @@
 #This file hosts code which generates a list of updated manga chapters of interest from KissManga.com
 #parts of this code were contributed by programmers on http://stackoverflow.com/
-def getOldTitleNChap(String):
-    myfile = open(String,'r+')
-    titles = []
-    old = []
-    for line in myfile:
-        splitLine = line.split('\t')
-        titles.append(splitLine[0])
-        old.append(float(splitLine[1]))
-    return titles, old
 def getHtmlOf(title,scraper):
     website = "http://kissmanga.com/Manga/"
     website = website+title
@@ -42,7 +33,7 @@ def extractChapterNum(choice, title):
             #otherwise
             chapter = 1000
     return float(chapter)
-def CheckNprint(titles,old,textFile):
+def CheckNprint(InputTextFile,textFile):
     try:
         import datetime
         import cfscrape
@@ -51,51 +42,44 @@ def CheckNprint(titles,old,textFile):
         f = open(textFile,'a')
         f.truncate()
         f.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+'\n')
-        new = []
-        n = 0
-        total = 0
-        while n < len(titles):
-            print "Checking "+titles[n]
-            page_source = getHtmlOf(titles[n],scraper)
+        myfile = open(InputTextFile,'r+')
+        for line in myfile:
+            splitLine = line.split('\t')
+            title = splitLine[0]
+            oldie = float(splitLine[1])        
+            print "Checking "+title
+            total = 0
+            page_source = getHtmlOf(title,scraper)
             Chapter,Title = getString(page_source)
             Number = extractChapterNum(Chapter,Title)
             #handle chapter titles with no numbers (1000 indicates an error)
             if Number == 1000:
                 soup = BeautifulSoup(page_source)
                 listOfChapters = [x for x in soup.find_all('td') if x.a !=None]
-                Number = next((i+old[n] for i,x in enumerate(listOfChapters) if extractChapterNum(x.a.get_text(),Title) == old[n]),1000)
-            new.append(Number)
-            if(Number>old[n]):
+                Number = next((i+oldie for i,x in enumerate(listOfChapters) if extractChapterNum(x.a.get_text(),Title) == oldie),1000)
+            if(Number>oldie):
                 maybe = "New Chapter"+"("+'%5s'+") "+'%5s'+" for"+'%30s'+". You are now on "+ '%5s'
-                f.write(maybe % (str(Number-old[n]),str(Number),str(titles[n]),str(old[n])) + '\n')
-                print maybe % (str(Number-old[n]),str(Number),str(titles[n]),str(old[n]))
-                total = total + Number-old[n]
+                f.write(maybe % (str(Number-oldie),str(Number),str(title),str(oldie)) + '\n')
+                print maybe % (str(Number-oldie),str(Number),str(title),str(oldie))
+                total = total + Number-oldie
                 if eval(str(total).split(".")[1]) > 0:
                     total = eval(str(total).split(".")[0]) + 1
-            n+=1
         print 4*'\n'
         print "Total: ",total
         print "See ", textFile," for report"
         f.write('\n'+'Total: '+str(total))
-        f.write((4*'\n'))
-        f.write("List of titles with updated chapter numbers:\n")
-        for n in range(len(titles)):
-            f.write(str(titles[n]))
-            f.write(str('\t'))
-            f.write(str(new[n]))
-            f.write(str('\n'))
         f.close()
+        myfile.close()
     except:
         f.write("error")
         f.close()
+        myfile.close()
         raise
 ####################################################################################
 from time import sleep
 print "Program Start"
-#first step is to read in the titles
-titles, old = getOldTitleNChap('MangA.txt')
 #Get a list of the new titles from kissmanga.com
-CheckNprint(titles,old,'UpdatedManga.txt')
+CheckNprint('MangA.txt','UpdatedManga.txt')
 
 print "Program Done"
 sleep(3)
