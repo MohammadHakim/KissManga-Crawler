@@ -1,11 +1,6 @@
-2016-06-18 09:59:05
-New Chapter(489.0) 489.0 for                    Fairy-Tail. You are now on   0.0
-New Chapter(  4.0)  14.0 for                 Biorg-Trinity. You are now on  10.0
+2016-12-22 21:27:02
+New Chapter(  1.0) 499.0 for                       Kingdom. You are now on 498.0
+New Chapter(  2.0) 203.0 for             Nanatsu-no-Taizai. You are now on 201.0
+New Chapter(  3.0) 850.0 for                     One-Piece. You are now on 847.0
 
-Total: 493.0
-
-
-
-List of titles with updated chapter numbers:
-Fairy-Tail	489.0
-Biorg-Trinity	14.0
+Total: 3.0
