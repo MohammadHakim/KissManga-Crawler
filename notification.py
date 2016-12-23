@@ -5,81 +5,80 @@ def getHtmlOf(title,scraper):
     website = website+title
     page_source = scraper.get(website).content
     return page_source
-def getString(page_source):
+def getChNTitle(page_source):
     from bs4 import BeautifulSoup
     soup = BeautifulSoup(page_source)
     Chapter = soup.td.a.get_text()
     Title = soup.title.get_text()
     return Chapter,Title
-def extractChapterNum(choice, title):
+def extractChNum(SiteCh, SiteTitle):
     """This function looks for chapter, ch or numbers in a given choice string
     and utilizes the page title to choose candidate numbers that are assumed to
     be the chapter number"""
     import re
     try:
         #if the string CH is found (ch., ch, chapter, chap., etc)
-        temp = re.findall('ch[\w\s,.]+?\d+', choice, re.IGNORECASE)[-1]
-        chapter = re.search('\d+\.\d+|\d+',temp).group(0)
+        temp = re.findall('ch[\w\s,.]+?\d+', SiteCh, re.IGNORECASE)[-1]
+        ChNum = re.search('\d+\.\d+|\d+',temp).group(0)
     except (AttributeError, IndexError):
         #if there is a single digit in the chapter string
-        remove = title.split()#remove white spaces
-        biggie = re.compile('|'.join(map(re.escape,remove)))#remove strings which appear in the title string from the chapter string
-        choice = biggie.sub("",choice)
-        chapter = re.findall("\d+\.\d+|\d+",choice)#find all the numbers in the chapter string
-        chapter = [x for x in chapter if float(x)!=0]#excluding Zeros
-        if len(chapter)==1:
-            chapter = chapter[0]
+        remove = SiteTitle.split()#remove white spaces
+        temp = re.compile('|'.join(map(re.escape,remove)))#remove strings which appear in the title string from the chapter string
+        SiteCh = temp.sub("",SiteCh)
+        ChNum = re.findall("\d+\.\d+|\d+",SiteCh)#find all the numbers in the chapter string
+        ChNum = [x for x in ChNum if float(x)!=0]#excluding Zeros
+        if len(ChNum)==1:
+            ChNum = ChNum[0]
         else:
             #otherwise
-            chapter = 1000
-    return float(chapter)
-def CheckNprint(InputTextFile,textFile):
+            ChNum = 1000
+    return float(ChNum)
+def CheckNprint(InTxt,OutTxt):
     try:
         import datetime
         import cfscrape
         from bs4 import BeautifulSoup
         scraper = cfscrape.create_scraper()
-        f = open(textFile,'a')
-        f.truncate()
-        f.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+'\n')
-        myfile = open(InputTextFile,'r+')
-        for line in myfile:
+        Ofile = open(OutTxt,'a')
+        Ofile.truncate()
+        Ofile.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+'\n')
+        Ifile = open(InTxt,'r+')
+        for line in Ifile:
             splitLine = line.split('\t')
             title = splitLine[0]
-            oldie = float(splitLine[1])        
+            oldChNum = float(splitLine[1])        
             print "Checking "+title
             total = 0
             page_source = getHtmlOf(title,scraper)
-            Chapter,Title = getString(page_source)
-            Number = extractChapterNum(Chapter,Title)
+            Chapter,Title = getChNTitle(page_source)
+            Number = extractChNum(Chapter,Title)
             #handle chapter titles with no numbers (1000 indicates an error)
             if Number == 1000:
                 soup = BeautifulSoup(page_source)
-                listOfChapters = [x for x in soup.find_all('td') if x.a !=None]
-                Number = next((i+oldie for i,x in enumerate(listOfChapters) if extractChapterNum(x.a.get_text(),Title) == oldie),1000)
-            if(Number>oldie):
+                lstOCh = [x for x in soup.find_all('td') if x.a !=None]
+                Number = next((i+oldChNum for i,x in enumerate(lstOCh) if extractChNum(x.a.get_text(),Title) == oldChNum),1000)
+            if(Number>oldChNum):
                 maybe = "New Chapter"+"("+'%5s'+") "+'%5s'+" for"+'%30s'+". You are now on "+ '%5s'
-                f.write(maybe % (str(Number-oldie),str(Number),str(title),str(oldie)) + '\n')
-                print maybe % (str(Number-oldie),str(Number),str(title),str(oldie))
-                total = total + Number-oldie
+                Ofile.write(maybe % (str(Number-oldChNum),str(Number),str(title),str(oldChNum)) + '\n')
+                print maybe % (str(Number-oldChNum),str(Number),str(title),str(oldChNum))
+                total = total + Number-oldChNum
                 if eval(str(total).split(".")[1]) > 0:
                     total = eval(str(total).split(".")[0]) + 1
         print 4*'\n'
         print "Total: ",total
-        print "See ", textFile," for report"
-        f.write('\n'+'Total: '+str(total))
-        f.close()
-        myfile.close()
+        print "See ", OutTxt," for report"
+        Ofile.write('\n'+'Total: '+str(total))
+        Ofile.close()
+        Ifile.close()
     except:
-        f.write("error")
-        f.close()
-        myfile.close()
+        Ofile.write("error")
+        Ofile.close()
+        Ifile.close()
         raise
 ####################################################################################
 from time import sleep
 print "Program Start"
 #Get a list of the new titles from kissmanga.com
 CheckNprint('MangA.txt','UpdatedManga.txt')
-
 print "Program Done"
 sleep(3)
