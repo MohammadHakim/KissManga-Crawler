@@ -11,7 +11,7 @@ This project includes a crawler script for <https://kissmanga.com>:
 
 
 
-To run the scripts you need:
+Dependencies:
 
 1.	[Python 2.7](https://www.python.org/downloads/)
 
@@ -20,6 +20,8 @@ To run the scripts you need:
 3.	[Nodejs](https://nodejs.org/en/download/)
 
 4.	[The library Cloud Flare Scrape](https://github.com/Anorov/cloudflare-scrape)
+
+5.	[KissManga Sorting Algorithm](https://kissmanga.com/)
 
 
 
@@ -42,7 +44,3 @@ __Warnings:__
 1.	This script has been tested on a Windows 8+10 environments (I have been personally using it for at least a year)
 
 2.	The total number provided is an estimate, due to fractional chapter numbers (e.g. a sum of 2.002 is rounded to 3 chapters assuming .002 stands for an extra side story chapter. The problem here is .002 might be one chapter or two .001 chapters or any other combination).
-
-3.	This algorithm is totally dependent on the sort algorithm of the kissmanga website. It grabs the first entry in the site's list which is almost always the most recent chapter. There has been cases in the past where the most recent chapter is jumbled somewhere in the chapter list (is not the first entry).
-
-4.	This program is dependent on the cloud flare scrape library ability to bypass the security mechanism of kissmanga. If cloud flare updates their protective page from the 5 second counter to something else, this program is futile.
