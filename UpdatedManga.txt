@@ -1,6 +1,6 @@
-2016-12-22 21:27:02
-New Chapter(  1.0) 499.0 for                       Kingdom. You are now on 498.0
-New Chapter(  2.0) 203.0 for             Nanatsu-no-Taizai. You are now on 201.0
-New Chapter(  3.0) 850.0 for                     One-Piece. You are now on 847.0
+2017-01-27 18:12:23
+New Chapter(  5.0) 503.0 for                       Kingdom. You are now on 498.0
+New Chapter(  7.0) 208.0 for             Nanatsu-no-Taizai. You are now on 201.0
+New Chapter(  6.0) 853.0 for                     One-Piece. You are now on 847.0
 
-Total: 3.0
+Total: 18.0
