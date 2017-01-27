@@ -43,12 +43,12 @@ def CheckNprint(InTxt,OutTxt):
         Ofile.truncate()
         Ofile.write(datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')+'\n')
         Ifile = open(InTxt,'r+')
+        total = 0
         for line in Ifile:
             splitLine = line.split('\t')
             title = splitLine[0]
             oldChNum = float(splitLine[1])        
             print "Checking "+title
-            total = 0
             page_source = getHtmlOf(title,scraper)
             Chapter,Title = getChNTitle(page_source)
             Number = extractChNum(Chapter,Title)
