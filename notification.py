@@ -56,7 +56,7 @@ def CheckNprint(InTxt,OutTxt):
             if Number == 1000:
                 soup = BeautifulSoup(page_source)
                 lstOCh = [x for x in soup.find_all('td') if x.a !=None]
-                Number = next((i+oldChNum for i,x in enumerate(lstOCh) if extractChNum(x.a.get_text(),Title) == oldChNum),1000)
+                Number = next((i+oldChNum for i,x in enumerate(lstOCh) if extractChNum(x.a.get_text(),Title) == oldChNum),oldChNum)
             if(Number>oldChNum):
                 maybe = "New Chapter"+"("+'%5s'+") "+'%5s'+" for"+'%30s'+". You are now on "+ '%5s'
                 Ofile.write(maybe % (str(Number-oldChNum),str(Number),str(title),str(oldChNum)) + '\n')
